@@ -1,0 +1,19 @@
+.header{
+    background-color: whitesmoke;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      position: relative;
+  }
+  
+  .header img {
+    position: absolute;
+    left: 10px;
+    width: 80px;
+  }
+
+  .header > h2 {
+   color: black;
+  }

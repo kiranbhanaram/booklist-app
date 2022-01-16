@@ -1,0 +1,15 @@
+.custom-loader {
+    position: absolute;
+    top: 43%;
+    left: 38%;
+    margin: auto;
+    width: 30%;
+    text-align: center;
+    display: flex;
+    z-index: 100;
+    }
+  
+.custom-loader span{
+    align-self: center;
+    margin-left: 20px;
+}

@@ -1,0 +1,33 @@
+.bookListContainer {
+    overflow-y: auto;
+    height: 80vh;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    color: #fff;
+    font-size: 1rem;
+    background-color: #2C3845;
+    margin: 20px;
+  }
+  .bookListContainer thead th {
+    position: sticky;
+    top: 0;
+  }
+  .bookListContainer table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  .bookListContainer table th,
+  .bookListContainer table td {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+  }
+  .bookListContainer table th {
+    width: 100%;
+    background-color: #202932;
+  }
+  
+  tbody tr:hover{
+  background:#BDC3C7;
+    color:#FFFFFF;
+    cursor: pointer;
+  }
