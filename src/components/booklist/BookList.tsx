@@ -26,6 +26,8 @@ export function BookList() {
 
   useEffect(() => {
     getTableData();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getTableData = (): void => {
