@@ -1,63 +1,46 @@
-import { useEffect} from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import "./BookDetail.css";
-import { BookProps } from "../booklist/BookList";
+import './BookDetail.css';
+import { BookProps } from '../booklist/BookList';
 
 type LocationParams = {
-  pathname: string;
-  state: { detailData:BookProps };
-  search: string;
-  hash: string;
-  key: string;
-}
+  rowData: BookProps;
+  onClose: () => void;
+};
 
-export const BookDetail =  (props: BookProps)=>{
+export function BookDetail(props: LocationParams) {
+  const { language, direction, source, comments, name } = props.rowData;
+  return (
+    <div className="detail">
+      <div className="detail-container">
+        <div>
+          <label>Name</label>
+          <div>{name || '-'}</div>
+        </div>
 
-  const navigate  = useNavigate();
-  const location = useLocation() as LocationParams;
+        <div>
+          <label>Language</label>
+          <div>{language || '-'}</div>
+        </div>
 
-  useEffect(() => {
-    if(!location.state){
-      navigate("/");
-    }
-  }, []);
+        <div>
+          <label>Direction</label>
+          <div>{direction || '-'}</div>
+        </div>
 
-  
-  	return (
-      <div className='detail'>
-    <div className='detail-container'>
-      <dl>
-        <dt>
-          Language
-        </dt>
-        <dd>
-          {location.state.detailData.language}
-        </dd>
-        <dt>
-        Direction
-        </dt>
-        <dd>
-        {location.state.detailData.direction}
-        </dd>
-        <dt>
-        source
-        </dt>
-        <dd>
-        {location.state.detailData.source}
-        </dd>
-        <dt>
-        comments
-        </dt>
-        <dd>
-        {location.state.detailData.comments}
-        </dd>
-      </dl>
+        <div>
+          <label>Source</label>
+          <div>{source || '-'}</div>
+        </div>
+
+        <div>
+          <label>Comments</label>
+          <div>{comments || '-'}</div>
+        </div>
+      </div>
+      <div className="detail-nav">
+        <button className="close" onClick={() => props.onClose()}>
+          Close
+        </button>
+      </div>
     </div>
-    <div className='detail-nav'>
-      <button className='close' onClick={()=> navigate("/")}>
-        Close
-      </button>
-    </div>
-  </div>
-    );
+  );
 }

@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import { axiosInstance } from "../../axiosConfig";
-import { useNavigate } from "react-router-dom";
-import { Loader } from "../loader/Loader";
-import { Toast } from "../toast/Toast";
-import "./BookList.css";
+import { useEffect, useState } from 'react';
+import { axiosInstance } from '../../axiosConfig';
+import { Loader } from '../loader/Loader';
+import { Toast } from '../toast/Toast';
+import './BookList.css';
+import { BookDetail } from '../bookDetail/BookDetail';
 
 type ErrorProp = {
   message: string;
-}
+};
 
 export type BookProps = {
   name?: string;
@@ -16,23 +16,23 @@ export type BookProps = {
   direction: string;
   source: string;
   comments: string;
-}
+};
 
-export const BookList = () => {
-  const navigate = useNavigate();
+export function BookList() {
   const [tableData, setTableData] = useState([]);
   const [showLoader, setShowLoader] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [modalData, setModalData] = useState<BookProps>();
 
   useEffect(() => {
     getTableData();
   }, []);
 
-  const getTableData = async () => {
+  const getTableData = (): void => {
     try {
       setShowLoader(true);
-      return axiosInstance
-        .get("fawazahmed0/quran-api@1/editions.json")
+      axiosInstance
+        .get('fawazahmed0/quran-api@1/editions.json')
         .then((response) => {
           if (response.data) {
             if (Object.values(response.data).length > 0) {
@@ -40,73 +40,49 @@ export const BookList = () => {
             }
           }
           setShowLoader(false);
-          return response.data;
         })
         .catch((error) => {
           setTableData([]);
           handleError(error, 'Table Data');
         });
-
     } catch (error) {
       setShowLoader(false);
     }
   };
 
-  const handleError = (error: ErrorProp, apiName: string) => {
+  const handleError = (error: ErrorProp, apiName: string): void => {
     setShowLoader(false);
-    setErrorMsg(error.message);
+    setErrorMsg(error.message || 'Error while making request to server');
     setTimeout(() => setErrorMsg(''), 3000);
-    //commented switch case to handle future unique response status code
-    // if (error.response) {
-    //   switch (error.response.status) {
-    //     case 403:
-    //       break;
-
-    //       case 404:
-    //       break;
-
-    //       case 500:
-    //       break;
-
-    //     default:
-    //       break;
-    //   }
-
-    // }
-
   };
 
   return (
     <>
-      {showLoader ? <Loader /> :
+      {showLoader ? (
+        <Loader />
+      ) : (
         <div className="bookListContainer">
           <Toast message={errorMsg} />
           <table>
             <thead>
               <tr>
-                <th style={{ width: '49%' }}>
-                  Book Name
-                </th>
-                <th>
-                  Author
-                </th>
-
+                <th style={{ width: '49%' }}>Book Name</th>
+                <th>Author</th>
               </tr>
             </thead>
 
             <tbody>
-              {tableData.map((rowData: BookProps, index: number) => {
-                return (
-                  <tr key={index} onClick={() => { navigate("/detail", { state: { detailData: rowData } }) }}>
-                    <td>{rowData.name}</td>
-                    <td>{rowData.author}</td>
-                  </tr>
-                );
-              })}
-
+              {tableData.map((rowData: BookProps, index: number) => (
+                <tr key={index} onClick={() => setModalData(rowData)}>
+                  <td>{rowData.name}</td>
+                  <td>{rowData.author}</td>
+                </tr>
+              ))}
             </tbody>
-            {/* <p>No Data </p> */}
           </table>
-        </div>}
-    </>);
+          {modalData && <BookDetail rowData={modalData} onClose={() => setModalData(undefined)} />}
+        </div>
+      )}
+    </>
+  );
 }
