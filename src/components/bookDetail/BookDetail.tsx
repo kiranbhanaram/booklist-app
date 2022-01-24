@@ -13,27 +13,27 @@ export function BookDetail(props: LocationParams) {
       <div className="detail-container">
         <div>
           <label>Name</label>
-          <div>{name || '-'}</div>
+          <div id="detail-name">{name || '-'}</div>
         </div>
 
         <div>
           <label>Language</label>
-          <div>{language || '-'}</div>
+          <div id="detail-lang">{language || '-'}</div>
         </div>
 
         <div>
           <label>Direction</label>
-          <div>{direction || '-'}</div>
+          <div id="detail-direction">{direction || '-'}</div>
         </div>
 
         <div>
           <label>Source</label>
-          <div>{source || '-'}</div>
+          <div id="detail-source">{source || '-'}</div>
         </div>
 
         <div>
           <label>Comments</label>
-          <div>{comments || '-'}</div>
+          <div id="detail-comment">{comments || '-'}</div>
         </div>
       </div>
       <div className="detail-nav">
